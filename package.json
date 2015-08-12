@@ -12,6 +12,7 @@
   "author": "Samuel G",
   "license": "ISC",
   "dependencies": {
+    "firebase": "^2.2.9",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "reactfire": "^0.5.0"
