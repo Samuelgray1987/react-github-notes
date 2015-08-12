@@ -23625,6 +23625,9 @@
 
 	var React = __webpack_require__(1);
 	var Router = __webpack_require__(157);
+	var Notes = __webpack_require__(200);
+	var Repos = __webpack_require__(202);
+	var UserProfile = __webpack_require__(201);
 
 	var Profile = React.createClass({
 	    displayName: 'Profile',
@@ -23632,9 +23635,9 @@
 	    mixins: [Router.State],
 	    getInitialState: function getInitialState() {
 	        return {
-	            notes: [],
-	            bio: {},
-	            repos: []
+	            notes: ['note1', 'note2'],
+	            bio: { name: 'Sam' },
+	            repos: [1, 2, 3]
 	        };
 	    },
 	    render: function render() {
@@ -23645,24 +23648,142 @@
 	            React.createElement(
 	                'div',
 	                { className: 'col-md-4' },
-	                'User Profile Component --> ',
-	                username
+	                React.createElement(UserProfile, { username: username, bio: this.state.bio })
 	            ),
 	            React.createElement(
 	                'div',
 	                { className: 'col-md-4' },
-	                'Repos Component'
+	                React.createElement(Repos, { username: username, repos: this.state.repos })
 	            ),
 	            React.createElement(
 	                'div',
 	                { className: 'col-md-4' },
-	                'Notes Component'
+	                React.createElement(Notes, { username: username, notes: this.state.notes })
 	            )
 	        );
 	    }
 	});
 
 	module.exports = Profile;
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var Notes = React.createClass({
+	    displayName: 'Notes',
+
+	    propTypes: {
+	        username: React.PropTypes.string.isRequired,
+	        notes: React.PropTypes.array.isRequired
+	    },
+	    defaultProps: function defaultProps() {
+	        return {
+	            username: '',
+	            notes: []
+	        };
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            null,
+	            this.props.username,
+	            '\'s Notes ',
+	            React.createElement('br', null),
+	            this.props.notes
+	        );
+	    }
+	});
+
+	module.exports = Notes;
+
+/***/ },
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var UserProfiles = React.createClass({
+	    displayName: 'UserProfiles',
+
+	    propTypes: {
+	        username: React.PropTypes.string.isRequired,
+	        bio: React.PropTypes.object.isRequired
+	    },
+	    defaultProps: function defaultProps() {
+	        return {
+	            username: '',
+	            bio: []
+	        };
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            null,
+	            'Username: ',
+	            this.props.username,
+	            'Bio: ',
+	            this.props.bio
+	        );
+	    }
+	});
+
+	module.exports = UserProfiles;
+
+/***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var RepoDetails = React.createClass({
+	    displayName: "RepoDetails",
+
+	    render: function render() {
+	        return React.createElement(
+	            "tr",
+	            null,
+	            React.createElement(
+	                "td",
+	                { key: this.props.ind },
+	                this.props.data
+	            )
+	        );
+	    }
+	});
+
+	var Repos = React.createClass({
+	    displayName: "Repos",
+
+	    defaultProps: function defaultProps() {
+	        return {
+	            repos: []
+	        };
+	    },
+	    propTypes: {
+	        repos: React.PropTypes.array.isRequired
+	    },
+	    render: function render() {
+	        var rows = this.props.repos.map(function (repo, i) {
+	            return React.createElement(RepoDetails, { data: repo, key: i });
+	        });
+	        return React.createElement(
+	            "table",
+	            { className: "table" },
+	            rows
+	        );
+	    }
+	});
+
+	module.exports = Repos;
 
 /***/ }
 /******/ ]);
